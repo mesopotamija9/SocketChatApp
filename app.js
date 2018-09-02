@@ -1,30 +1,39 @@
 var express = require("express");
 var app = express();
 var server = require("http").Server(app);
-var port = process.env.PORT || 3000;
 var io = require("socket.io")(server);
 
-app.use(express.static("public"));
+var users = [];
+var connectedUsers = 0;
 
+app.use(express.static(__dirname + '/public'));
 
-io.on("connection", function(socket) {
-    console.log("User Connected");
+io.on("connection", function(socket){
+    connectedUsers += 1;
+    console.log("Connected: " + connectedUsers);
 
-    io.emit("user connected", "User Connected");
-    
+    socket.on("enter username", function(data){
+        socket.username = data;
 
-    socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
+        users.push(socket.username);
+        io.emit("enter username", {username: data, users: users, connectedUsers: connectedUsers});
+    });
+
+    socket.on("chat message", function(data){
+        io.emit("chat message", {msg : data, username: socket.username});
     });
 
     socket.on("disconnect", function(){
-        console.log("User Disconnected");
-        io.emit("user disconnected", "User Disconnected");
+        connectedUsers -= 1;
+        users.splice(users.indexOf(socket.username), 1);
+
+        io.emit("user disconnected", {username: socket.username, users: users, connectedUsers: connectedUsers});
+
+        console.log("Connected: " + connectedUsers);
     });
 });
 
 
-
-server.listen(port, function(){
-    console.log("Listening on port " + port + "...");
+server.listen(process.env.PORT || 3000, function(){
+    console.log("Listening on port 3000...");
 });

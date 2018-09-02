@@ -1,26 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Socket.io Chat Demo</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat App</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
-
-
 <body>
+    <div class="container">
+        <div id="default">
+            <form action="" id="usernameForm">
+                <label for="username">Enter Username</label>
+                <input id="username" class="form-control" type="text" autocomplete="off" maxlength="20" required>
+                <button class="btn btn-dark btn-lg">Submit</button>
+            </form>
+        </div>
 
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off">
-      <button>Send</button>
-    </form>
-  
+        <div id="chatApp">
+            <div class="row">
+                <div class="col-md-4" id="onlineUsersWrapper">
+                    <ul id="onlineUsers" class="list-unstyled"></ul>
+                </div>
+                <div class="col-md-8">
+                    <ul id="chat" class="list-unstyled"></ul>
 
-<script src="socket.js"></script>
+                    <form action="" id="chatForm">
+                        <input id="message" class="form-control" type="text" autocomplete="off">
+                        <button class="btn btn-dark">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="main.js"></script>
 </body>
-
 </html>
